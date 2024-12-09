@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block signup_buttons %}
+{% endblock %}
+{% block login_buttons %}
+{% endblock %}
+
+{% block content %}
+  <h2>Select Your  Language</h2>
+  <form method="post" action="{% url 'language' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Select  Language">
+  </form>
+{% endblock %}

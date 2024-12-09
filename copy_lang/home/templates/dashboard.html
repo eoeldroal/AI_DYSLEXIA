@@ -1,0 +1,102 @@
+<!-- language_app/templates/dashboard.html -->
+{% extends 'base.html' %}
+{% block title %}Dashboard - Language Learning App{% endblock %}
+{% block signup_buttons %}
+{% endblock %}
+{% block login_buttons %}
+{% endblock %}
+
+{% block content %}
+  <section class="container my-4">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">User Profile</h4>
+          </div>
+          <div class="card-body">
+            <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
+            <p><strong>Email:</strong> {{ user_profile.user.email }}</p>
+            <p><strong>Language Level:</strong> {{ user_profile.language_level }}</p>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Your Languages</h4>
+          </div>
+          <div class="card-body">
+            <ul>
+              {% for user_language in user_languages %}
+                <li>{{ user_language.language.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mt-4">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Your Progress</h4>
+          </div>
+          <div class="card-body">
+            <h5>Completed Lessons:</h5>
+            <ul>
+              {% for lesson in completed_lessons %}
+                <li>{{ lesson.title }}</li>
+              {% endfor %}
+            </ul>
+            <!-- language_app/templates/dashboard.html -->
+            <h5 >lesson_detail:</h5>
+        <ul>
+      {% for lesson in completed_lessons %}
+      <li>
+        <a href="{% url 'lesson_detail' lesson_id=lesson.id %}">{{ lesson.title }}</a>
+        {% comment %} <a href="{% url 'lesson_detail' %}">{{ lesson.title }}</a> {% endcomment %}
+      
+      </li>
+      {% endfor %}
+    </ul>
+  
+            <h5>Favorite Language:</h5>
+            <p>{{ favorite_language.name }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Community Interaction</h4>
+          </div>
+          <div class="card-body">
+            <ul>
+              
+              <li><a href="{% url 'update_profile' %}">Create your profile</a></li>
+              <li><a href="{% url 'community_posts' %}">Community Posts</a></li>
+              <li><a href="{% url 'create_community_post' %}">Create a Community Post</a></li>
+              <li><a href="{% url 'language' %}">your language</a></li>
+              <li><a href="{% url 'select_favorite_language' %}">Select Favorite Language</a></li>
+              <li><a href="{% url 'create_lesson' %}">Create  Lesson</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Community Posts</h4>
+          </div>
+          <div class="card-body">
+            {% for post in community_posts %}
+              <div class="mb-3">
+                <h5>{{ post.title }}</h5>
+                <p>{{ post.content }}</p>
+                <small class="text-muted">Posted by {{ post.user.username }} on {{ post.created_at }}</small>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

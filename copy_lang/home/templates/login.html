@@ -1,0 +1,48 @@
+<!-- language_app/templates/login.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Log In - Language Learning App{% endblock %}
+
+{% block login_buttons %}
+{% endblock %}
+{% block logout_buttons %}
+
+<!-- 로그인 페이지에서는 버튼을 숨기므로 빈 블록으로 덮어씁니다. -->
+{% endblock %}
+
+ {% block content %}
+  <section class="container my-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Log In</h4>
+          </div>
+          <div class="card-body">
+          
+            <form method="post" action="{% url 'login' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                  <div class="input-group">
+                      <i class="fas fa-user mx-2 my-auto"></i>
+                      <input type="text" class="form-control" name="username" placeholder="Username" />
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="input-group">
+                      <i class="fas fa-key mx-2 my-auto"></i>
+                      <input type="password" class="form-control" name="password" placeholder="Password" />
+                  </div>
+              </div>
+              <div class="form-group text-center">
+                  <button type="submit" class="btn btn-success">Login</button>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+          {% endblock  %}

@@ -1,0 +1,24 @@
+<!-- language_app/templates/community_posts.html -->
+{% extends 'base.html' %}
+{% block title %}Community Posts - Language Learning App{% endblock %}
+
+{% block signup_buttons %}
+{% endblock %}
+{% block login_buttons %}
+{% endblock %}
+
+{% block content %}
+  <section class="container my-4">
+    <h2>Community Posts</h2>
+    <ul>
+      {% for post in posts %}
+        <li>
+          <strong>{{ post.title }}</strong>
+          <p>{{ post.content }}</p>
+          <p>Posted by {{ post.user.username }} on {{ post.created_at }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'create_community_post' %}">Create a New Post</a>
+  </section>
+{% endblock %}

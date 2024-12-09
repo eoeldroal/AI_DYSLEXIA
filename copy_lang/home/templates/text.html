@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단어 데이터베이스</title>
+    <style>
+        .highlighted {
+            background-color: yellow;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>단어 설명 및 오디오 출력</h1>
+    
+    <!-- 폼 제출을 위한 텍스트 입력 -->
+    <form id="text-form" method="POST">
+        {% csrf_token %}
+        <textarea name="input_text" id="input_text" rows="4" cols="50" placeholder="글을 입력하세요."></textarea><br><br>
+        <button type="submit">입력</button>
+    </form>
+
+    <div id="word-info"></div>
+    <audio id="audio-player" controls></audio>
+
+    <script>
+        // CSRF 토큰을 헤더에 추가하는 함수
+        function getCSRFToken() {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            return csrfToken;
+        }
+
+        // 단어 하이라이팅 및 오디오 재생 기능
+        document.getElementById('text-form').onsubmit = async function(event) {
+            event.preventDefault();
+            let inputText = document.getElementById('input_text').value;
+
+            // 서버로 텍스트 데이터 전송
+            let response = await fetch('/create_lesson/', {  // 엔드포인트 URL 수정
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()  // CSRF 토큰을 헤더에 추가
+                },
+                body: JSON.stringify({ input_text: inputText })
+            });
+
+            if (response.ok) {
+                let data = await response.json();
+                let wordInfoDiv = document.getElementById('word-info');
+                wordInfoDiv.innerHTML = '';
+
+                // 단어 및 설명 표시
+                for (let word in data.explanations) {
+                    let wordElement = document.createElement('p');
+                    wordElement.innerHTML = `${word}: ${data.explanations[word]}`;
+                    wordInfoDiv.appendChild(wordElement);
+
+                    // 단어 하이라이팅 처리
+                    document.getElementById('input_text').innerHTML = document.getElementById('input_text').innerHTML.replace(
+                        new RegExp('\\b' + word + '\\b', 'g'), `<span class="highlighted">${word}</span>`
+                    );
+                }
+
+                // 하이라이팅된 단어에 대한 클릭 이벤트 등록
+                document.querySelectorAll('.highlighted').forEach(item => {
+                    item.onclick = function() {
+                        let word = item.textContent.trim().toLowerCase();
+                        fetch(`/word/${word}/`)  // 오디오 파일을 가져올 URL 수정
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.audio_file) {
+                                    document.getElementById('audio-player').src = data.audio_file;
+                                    document.getElementById('audio-player').play();
+                                }
+                            });
+                    };
+                });
+            } else {
+                console.error('Failed to fetch word explanations');
+            }
+        };
+    </script>
+</body>
+</html>
