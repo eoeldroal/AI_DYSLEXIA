@@ -1,0 +1,37 @@
+<!-- language_app/templates/index.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Welcome to the Language Learning App{% endblock %}
+
+{% block logout_buttons %}
+{% endblock %}
+{% block content %}
+
+  <section class="hero text-center">
+    <h2>Welcome to the Language Learning App</h2>
+   
+  </section>
+
+  <section class="getting-started text-center my-4">
+    <h2>Getting Started</h2>
+    <ul class="list-unstyled">
+      <li><a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a></li><br>
+      <li><a class="btn btn-outline-primary" href="{% url 'login' %}">Log In</a></li>
+      <li><a class="btn btn-outline-primary" href="{% url 'logout' %}">Log out</a></li>
+    </ul>
+  </section>
+
+  <section class="features my-4">
+    <h2 class="text-center">Features</h2>
+    <ul class="list-group">
+      <li class="list-group-item">Interactive Lessons</li>
+      <li class="list-group-item">User Profiles and Progress Tracking</li>
+      <li class="list-group-item">Community Interaction and Language Exchange</li>
+    </ul>
+  </section>
+ 
+  <footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 Language Learning App</p>
+</footer>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Create Your Profile - Language Learning App{% endblock %}
+
+{% block signup_buttons %}
+{% endblock %}
+{% block login_buttons %}
+{% endblock %}
+ {% block content %}
+  <section class="container my-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Create Your Profile </h4>
+          </div>
+          <div class="card-body">
+            <form method="post" action="{% url 'update_profile' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update Profile">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+          {% endblock  %}

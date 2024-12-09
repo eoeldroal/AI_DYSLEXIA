@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ lesson.title }} - Language Learning App{% endblock %}
+{% block signup_buttons %}
+{% endblock %}
+{% block login_buttons %}
+{% endblock %}
+
+{% block content %}
+  <section class="container my-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">{{ lesson.title }}</h4>
+      </div>
+      <div class="card-body">
+        <p>{{ lesson.content }}</p>
+     
+      </div>
+    </div>
+  </section>
+  <li><a href="{% url 'select_favorite_language' %}">Select Favorite Language</a></li>
+{% endblock %}

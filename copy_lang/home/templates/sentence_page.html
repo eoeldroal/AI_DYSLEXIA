@@ -1,0 +1,12 @@
+<html>
+<head>
+    <title>Sentence Page</title>
+</head>
+<body>
+    <h2>Sentence {{ page_number }}</h2>
+    <p>{{ sentences[page_number] }}</p>
+    <button onclick="location.href='/page/{{ page_number - 1 }}'">Previous</button>
+    <button onclick="location.href='/page/{{ page_number + 1 }}'">Next</button>
+    <button onclick="location.href='/play_audio/audio_{{ page_number }}.mp3'">Play Audio</button>
+</body>
+</html>
